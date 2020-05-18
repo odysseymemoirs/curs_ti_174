@@ -1,38 +1,26 @@
-document.addEventListener("DOMContentLoaded", function () {
+    
+    const socket = socketConnection.instance
 
-    // Initialize instances:
-    var socket = io.connect();
-    socket.on('loader', () => {
-        document
-    })
     socket.on('load', (data) => {
+        let div = document.createElement('div')
+        let img = document.createElement('img')
+        div.classList.add(`one-half`)
+        div.classList.add(`column`)
+        div.classList.add(`category`)
 
-        console.log(data)
-        let a = document.createElement('div')
-        let b = document.createElement('img')
-        a.classList.add(`one-half`)
-        a.classList.add(`column`)
-        a.classList.add(`category`)
+        img.classList.add('u-max-full-width')
+        img.setAttribute('src', data)
 
-        b.classList.add('u-max-full-width')
-        b.setAttribute('src', data)
-
-        let c = document.getElementById('images');
-        a.appendChild(b)
-        c.appendChild(a)
+        let wrapper = document.getElementById('images');
+        div.appendChild(img)
+        wrapper.appendChild(div)
     })
-    var siofu = new SocketIOFileUpload(socket);
 
-    // Configure the three ways that SocketIOFileUpload can read files:
-    document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
-    // siofu.listenOnInput(document.getElementById("upload_input"));
-    siofu.listenOnDrop(document.getElementById("file_drop"));
+    const socket2 = socketConnection.instance
+    console.log(socket2 === socket) // вернет true так как это один и тот же инстанс
 
-    // Do something when a file is uploaded:
-    siofu.addEventListener("complete", function (event) {
-        console.log(event.success);
-        console.log(event.file);
-    });
+    // const socket3 = io.connect();
+    // const socket4 = io.connect();
+    // console.log(socket3 === socket4) // false
 
-}, false);
 

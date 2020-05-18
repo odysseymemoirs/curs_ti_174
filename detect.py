@@ -38,12 +38,12 @@ parser.add_argument('--image')
 
 args = parser.parse_args()
 
-faceProto = "opencv_face_detector.pbtxt"
-faceModel = "opencv_face_detector_uint8.pb"
-ageProto = "age_deploy.prototxt"
-ageModel = "age_net.caffemodel"
-genderProto = "gender_deploy.prototxt"
-genderModel = "gender_net.caffemodel"
+faceProto = "opencv_models/opencv_face_detector.pbtxt"
+faceModel = "opencv_models/opencv_face_detector_uint8.pb"
+ageProto = "opencv_models/age_deploy.prototxt"
+ageModel = "opencv_models/age_net.caffemodel"
+genderProto = "opencv_models/gender_deploy.prototxt"
+genderModel = "opencv_models/gender_net.caffemodel"
 
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744, 114.895847746)
 ageList = ['(0-2)', '(4-6)', '(8-12)', '(15-20)',
@@ -93,7 +93,7 @@ while cv2.waitKey(1) < 0:
         # cv2.imshow("Detecting age and gender", resultImg)
         # print('hello prom py')
 
-        cv2.imwrite( os.path.join(gettempdir(),'uploads',args.image +'_result.jpg'), resultImg)
+        cv2.imwrite( '_result.jpg', resultImg)
         # print("ggggggggggggggggggggggggg")
         # fourcc = cv2.VideoWriter_fourcc(*'XVID')
         # out = cv2.VideoWriter('output.avi',fourcc, 20.0, (300,300))

@@ -14,11 +14,11 @@ var app = express()
     .use(SocketIOFileUploadServer.router)
     .use(express.static(__dirname + "/public/"))
     .use('/static', express.static(path.resolve(os.tmpdir(), 'uploads')))
-   
 
-// Template engine settings
 
-    .listen(3000, ()=> {console.log('server running')});
+    // Template engine settings
+
+    .listen(3000, () => { console.log('server running') });
 
 
 // Start up Socket.IO:
@@ -31,14 +31,13 @@ io.sockets.on("connection", function (socket) {
     uploader.listen(socket);
 
     // Do something when a file is saved:
-    uploader.on("saved",  function (event) {
+    uploader.on("saved", function (event) {
         // console.log(event.file)
-        exec(`py detect.py --image ${os.tmpdir()}/uploads/${event.file.name}`, ()=> {
-           console.log("callback")
+        exec(`py detect.py --image ${os.tmpdir()}/uploads/${event.file.name}`, () => {
+            console.log("callback")
 
-               io.emit('load', `/static/${event.file.name}_result.jpg`);
-  
-       })
+            io.emit('load', `/static/${event.file.name}_result.jpg`);
+        })
         // console.log("detected")
     });
 });
