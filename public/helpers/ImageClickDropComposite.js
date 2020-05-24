@@ -11,12 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     class ImageClickDropListeners {
         constructor() {
             this.composite = new Array;
-            this.instance = new SocketIOFileUpload(socket);
-            this.instance.addEventListener("complete", function (event) {
-                console.log(event.success);
-                console.log(event.file);
-            });
-
+            this.instance = ioInstance
         }
         print() {
             console.log(this.composite)
@@ -48,3 +43,4 @@ document.addEventListener("DOMContentLoaded", function () {
     ])
 
 })
+

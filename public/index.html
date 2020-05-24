@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/skeleton.css">
   <link rel="stylesheet" href="/css/additional.css">
+  <link rel="stylesheet" href="./css/fancyLoader.css">
+
 
   <!-- Scripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -44,7 +46,7 @@
 
     <section class='header'>
 
-      <h2 class="title">Face and Age detection using OPENCV.</h2>
+      <h2 class="title">Course Work: Age recognition from photo and video.</h2>
     </section>
 
     <section class='header'>
@@ -61,16 +63,18 @@
 
     <div class="section categories">
       <div class="container">
-        <h3 class="section-heading header">Images</h3>
         <div id='images' class="row">
+        </div>
+        <div id='videos' class="row">
+        </div>
         </div>
       </div>
     </div>
-
   </div>
 
 
 </body>
+<script src='./helpers/DomManipulation.js'></script>
 <script src='./helpers/SingleSocketConnection.js'></script>
 <script src='/index.js'></script>
 <script src='./helpers/ImageClickDropComposite.js'></script>

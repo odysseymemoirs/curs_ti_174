@@ -93,7 +93,9 @@ while cv2.waitKey(1) < 0:
         # cv2.imshow("Detecting age and gender", resultImg)
         # print('hello prom py')
 
-        cv2.imwrite( '_result.jpg', resultImg)
+        # cv2.imwrite( '_result.jpg', resultImg)
+        cv2.imwrite( os.path.join(gettempdir(),'uploads',args.image +'_result.jpg'), resultImg)
+
         # print("ggggggggggggggggggggggggg")
         # fourcc = cv2.VideoWriter_fourcc(*'XVID')
         # out = cv2.VideoWriter('output.avi',fourcc, 20.0, (300,300))
