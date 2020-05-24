@@ -4,4 +4,8 @@ node_modules
 detect2.py
 public/css/skeleton.css
 public/css/normalize.css
+public/css/additional.css
+public/css/fancyLoader.css
+
+
 
