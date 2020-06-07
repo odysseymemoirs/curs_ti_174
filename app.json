@@ -1,0 +1,29 @@
+{
+    "name": "Course Work: Age detection with OpenCv",
+    "description": "this file serts for deploying on heroku from github repo",
+    "website": "https://github.com/odysseymemoirs/curs_ti_174",
+    "repository": "https://github.com/odysseymemoirs/curs_ti_174",
+    "logo": "https://node-js-sample.herokuapp.com/node.svg",
+    "success_url": "/",
+    "keywords": [
+      "node",
+      "express",
+      "socket.io",
+      "opencv",
+      "websocket",
+      "python"
+    ],
+    "scripts": {
+        "start": "node app.js"
+      },
+    "addons": [
+    ],
+    "buildpacks": [
+        {
+          "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+        },
+        {
+          "url": "https://github.com/heroku/heroku-buildpack-python"
+        }
+      ]
+  }

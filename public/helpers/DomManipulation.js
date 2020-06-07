@@ -7,7 +7,6 @@ var $ = (function () {
 	 * @param {String} selector The selector to use
 	 */
     var Constructor = function (selector) {
-        console.log('selector', selector)
         if (!selector) return;
         if (selector === 'document') {
             this.elems = [document];
@@ -72,6 +71,19 @@ var $ = (function () {
         return this;
     };
 
+        /**
+	 * Set new styles to element
+	 * @param {String} className The class name
+	 */
+    Constructor.prototype.event = function (event,callback) {
+
+       
+            this.elems.style[e[0]] = e[1]
+    
+
+        return this;
+    };
+
     /**
     * Set new attributes to element
     * @param {String} className The class name
@@ -112,8 +124,6 @@ var $ = (function () {
     * @param {String} className The class name
     */
     Constructor.prototype.returnParent = function (index) {
-
-
         let parent = this.elems.parentNode
         this.elems = parent
 
@@ -168,47 +178,7 @@ var $ = (function () {
     };
 
 
-    /**
-    * Append child element  
-    * 
-    *  -Element 1 =$0
-    *       -Element 2 
-    *       -Element 3
-    *           -will apend as a child to Element 3
-    * 
-    * @param {String} className The class name
-    */
-    Constructor.prototype.appendNext = function (elem, targetIndex = 0, count = 1) {
-        let targetElem = this.elems.lastChild
-        for (let i = 0; i < targetIndex; i++) {
-            targetElem = targetElem.lastChild
-        }
-
-        for (let i = 0; i < count; i++) {
-            let child = document.createElement(elem.type)
-
-            if (elem.class)
-                elem.class.map(e => {
-                    child.classList.add(e)
-                })
-
-            if (elem.id)
-                child.id = elem.id
-
-            if (elem.attr)
-                elem.attr.map(e => {
-                    child.setAttribute(e[0], e[1])
-                })
-
-            if (elem.style)
-                elem.style.map(e => {
-                    child.style[e[0]] = e[1]
-                })
-            targetElem.appendChild(child)
-        }
-        return this;
-    };
-
+    
 	/**
 	 * Instantiate a new constructor
 	 */

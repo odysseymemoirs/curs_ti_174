@@ -2,73 +2,76 @@
 const socket = socketConnection.instance
 const ioInstance = new SocketIOFileUpload(socket);
 
-socket.on('detected', (data) => {
+// create image and video grid
+const imageVideoComposition = new DynamicGallery('videos');
 
+// append it to DOM node
+let a = document.getElementsByClassName('gridContainer')
+a[0].appendChild(imageVideoComposition.element)
 
-    console.log($(`#sss${data.id}`))
+// create dom node for current detecting image or video
+let currentDetectingItem = null;
 
-    $(`#sss${data.id}`)
-        .returnChild(0)
-        .attr([['src', data.path]])
-        .style([['opacity', "100%"]])
-        .returnParent()
-        .returnChild(1)
-        .delete()
-
-})
-
+// after uploading image or video socket 'uploaded' event fires
+// with current image or video url inside data argument
+// we have to predisplay it to user
 socket.on('uploaded', (data) => {
 
-    $('#videos').style([['width','400px'],['heigth','400px'],['margin','0 auto']])
-        .append({
-            type: 'div',
-            attr: [],
-            class: ['eleven', 'columns'],
-            id: `sss${data.id}`,
-            style: [['position', 'relative']]
-        })
-        .appendNext({
-            type: 'video',
-            attr: [['src', data.path], ['autoplay', true], ['loop', true]],
-            class: ['u-max-full-width'],
-            style: [['opacity', '20%']],
-        })
+    const imageVideoBuilder = new ImageVideoBuilder();
+    const imageVideoBuilderDirector = new ImageVideoDirector(imageVideoBuilder);
+    const element = imageVideoBuilderDirector.createDetectingVideoNode(data.path, data.id);
 
-        .appendNext({
-            type: 'div',
-            attr: [],
-            class: ['eleven', 'columns']
-        })
+    currentDetectingItem = new GalleryImage(data.id,element)
 
-        .appendNext({
-            type: 'div',
-            attr: [],
-            class: ['loader']
-        }, 1)
-        .appendNext({
-            type: 'div',
-            attr: [],
-            class: ['square']
-        }, 2)
-        .appendNext({
-            type: 'div',
-            attr: [],
-            class: ['lines']
-        }, 2)
-        .appendNext({
-            type: 'span',
-            attr: [],
-            class: []
-        }, 3, 4)
-
+    imageVideoComposition.add(currentDetectingItem);
 
 })
 
+// when face and age recognition algorithm end processing, socket 'detected' event fires
+// with current  detected image or video url inside data argument
+// we have to display it to user
+socket.on('detected', (data) => {
+
+    // remove predisplaying video or image (removing element from composition)
+    imageVideoComposition.remove(data.id)
+
+    // and create new element
+    const imageVideoBuilder = new ImageVideoBuilder();
+    const imageVideoBuilderDirector = new ImageVideoDirector(imageVideoBuilder);
+    const element = imageVideoBuilderDirector.createDetectedVideoNode(data.path, data.id);
+
+    // add detected video or image instead (adding new element to composition)
+    currentDetectingItem = new GalleryImage(data.id,element)
+    imageVideoComposition.add(currentDetectingItem)
+
+    // after page refreshing sockedId is changing
+    // so we have to save url to localStorage
+    let storage = JSON.parse(localStorage.getItem("history"))
+    if (!storage) {
+
+        let storage = {
+            links: []
+        }
+        localStorage.setItem("history", JSON.stringify(storage))
+    }
+    storage.links.push(data.path)
+    localStorage.setItem("history", JSON.stringify(storage))
+
+})
+
+document.getElementById('upload_btn').addEventListener("click", ioInstance.prompt)
+ioInstance.listenOnDrop(document.getElementById('upload_btn'));
+
+// drop area styling
+let btn = $('#upload_btn')
+btn.elems.ondragenter = () => {
+    btn.elems.style.border = '1px solid green'
+}
+
+btn.elems.ondragleave = () => { btn.elems.style.border = '1px solid #bbb' }
+btn.elems.ondrop = () => { btn.elems.style.border = '1px solid #bbb' }
+
+let checkbox = $('#checkbox')
+checkbox.elems.checked = false
 
 
-const socket2 = socketConnection.instance
-// console.log(socket2 === socket) // true 
-
-// const socket3 = io.connect();
-// const socket4 = io.connect();
-// console.log(socket3 === socket4) // false

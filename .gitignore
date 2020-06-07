@@ -1,7 +1,7 @@
 .vercel
 now.json
 node_modules
-detect2.py
+detect.py
 public/css/skeleton.css
 public/css/normalize.css
 public/css/additional.css

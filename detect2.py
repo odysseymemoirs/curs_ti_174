@@ -32,12 +32,44 @@ def highlightFace(net, frame, conf_threshold=0.7):
                           (0, 255, 0), int(round(frameHeight/150)), 8)
     return frameOpencvDnn, faceBoxes
 
+def detectFaceOpenCVHaar(faceCascade, frame, inHeight=300, inWidth=0):
+    frameOpenCVHaar = frame.copy()
+    frameHeight = frameOpenCVHaar.shape[0]
+    frameWidth = frameOpenCVHaar.shape[1]
+    if not inWidth:
+        inWidth = int((frameWidth / frameHeight) * inHeight)
+
+    scaleHeight = frameHeight / inHeight
+    scaleWidth = frameWidth / inWidth
+
+    frameOpenCVHaarSmall = cv2.resize(frameOpenCVHaar, (inWidth, inHeight))
+    frameGray = cv2.cvtColor(frameOpenCVHaarSmall, cv2.COLOR_BGR2GRAY)
+
+    faces = faceCascade.detectMultiScale(frameGray)
+    bboxes = []
+    for (x, y, w, h) in faces:
+        x1 = x
+        y1 = y
+        x2 = x + w
+        y2 = y + h
+        cvRect = [int(x1 * scaleWidth), int(y1 * scaleHeight),
+                  int(x2 * scaleWidth), int(y2 * scaleHeight)]
+        bboxes.append(cvRect)
+        cv2.rectangle(frameOpenCVHaar, (cvRect[0], cvRect[1]), (cvRect[2], cvRect[3]), (0, 255, 0),
+                      int(round(frameHeight / 150)), 4)
+    return frameOpenCVHaar, bboxes
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--image')
+parser.add_argument('--socket_id')
+parser.add_argument('--method')
+
+
 
 args = parser.parse_args()
 
+faceCascade = cv2.CascadeClassifier('opencv_models/haarcascade_frontalface_default.xml')
 faceProto = "opencv_models/opencv_face_detector.pbtxt"
 faceModel = "opencv_models/opencv_face_detector_uint8.pb"
 ageProto = "opencv_models/age_deploy.prototxt"
@@ -50,16 +82,17 @@ ageList = ['(0-2)', '(4-6)', '(8-12)', '(15-20)',
            '(25-32)', '(38-43)', '(48-53)', '(60-100)']
 genderList = ['Male', 'Female']
 
+
 faceNet = cv2.dnn.readNet(faceModel, faceProto)
 ageNet = cv2.dnn.readNet(ageModel, ageProto)
 genderNet = cv2.dnn.readNet(genderModel, genderProto)
 
-print(args.image)
 video = cv2.VideoCapture(args.image if args.image else 0)
+hasFrame, frame = video.read()
 
-# img = base64.b64decode(args.image); 
-# npimg = np.fromstring(img, dtype=np.uint8); 
-# source = cv2.imdecode(npimg, 1)
+dirr = os.path.join(gettempdir(),'uploads',args.socket_id,args.image + '_result.mp4v')
+vid_writer = cv2.VideoWriter(dirr.format(str(args.image).split(".")[0]),cv2.VideoWriter_fourcc(*'XVID'), 15, (frame.shape[1],frame.shape[0]))
+
 
 padding = 20
 while cv2.waitKey(1) < 0:
@@ -68,7 +101,14 @@ while cv2.waitKey(1) < 0:
         cv2.waitKey()
         break
 
-    resultImg, faceBoxes = highlightFace(faceNet, frame)
+    if args.method == "deep":
+        print("deep")
+        resultImg, faceBoxes = highlightFace(faceNet, frame)
+    else:
+        print("haar")
+        resultImg, faceBoxes = detectFaceOpenCVHaar(faceCascade, frame)
+
+
     # if not faceBoxes:
     #     print("No face detected")
 
@@ -78,9 +118,9 @@ while cv2.waitKey(1) < 0:
 
         blob = cv2.dnn.blobFromImage(
             face, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False)
-        genderNet.setInput(blob)
-        genderPreds = genderNet.forward()
-        gender = genderList[genderPreds[0].argmax()]
+        # genderNet.setInput(blob)
+        # genderPreds = genderNet.forward()
+        # gender = genderList[genderPreds[0].argmax()]
         # print(f'Gender: {gender}')
 
         ageNet.setInput(blob)
@@ -88,40 +128,14 @@ while cv2.waitKey(1) < 0:
         age = ageList[agePreds[0].argmax()]
         # print(f'Age: {age[1:-1]} years')
 
-        cv2.putText(resultImg, f'{gender}, {age}', (
-            faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2, cv2.LINE_AA)
+        cv2.putText(resultImg, f'Age: {age}', (
+            faceBox[0], faceBox[1]+250), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 102, 255), 2, cv2.LINE_AA)
         # cv2.imshow("Detecting age and gender", resultImg)
-        # print('hello prom py')
 
-        # cv2.imwrite( '_result.jpg', resultImg)
-        cv2.imwrite( os.path.join(gettempdir(),'uploads',args.image +'_result.jpg'), resultImg)
-
-        # print("ggggggggggggggggggggggggg")
-        # fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        # out = cv2.VideoWriter('output.avi',fourcc, 20.0, (300,300))
-        # ret, frame = resultImg.read()
-        # if ret==True:
-        #  frame = cv2.flip(frame,0)
-        #  out.write(frame)
-        # # out.release()
-
-        # cap = cv2.VideoCapture(0)
-        # retval, image = cap.read()
-        # cap.release()
-
-        # Convert captured image to JPG
-        # retval, buffer = cv2.imencode('.jpg', resultImg)
-
-        # Convert to base64 encoding and show start of data
-        # jpg_as_text = base64.b64encode(buffer)
-        # print(jpg_as_text.decode("utf-8"))
-    
+        cv2.imwrite('_result.jpg', resultImg)
+    vid_writer.write(resultImg)
 
 
-        # # Convert back to binary
-        # jpg_original = base64.b64decode(jpg_as_text)
-        # # print(jpg_original)
-
-        # # Write to a file to show conversion worked
-        # with open('test.jpg', 'wb') as f_output:
-        #     f_output.write(jpg_original)
+cv2.destroyAllWindows()
+vid_writer.release()
+      
