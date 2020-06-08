@@ -33,6 +33,8 @@ def highlightFace(net, frame, conf_threshold=0.7):
     return frameOpencvDnn, faceBoxes
 
 def detectFaceOpenCVHaar(faceCascade, frame, inHeight=300, inWidth=0):
+    print('haar alg')
+
     frameOpenCVHaar = frame.copy()
     frameHeight = frameOpenCVHaar.shape[0]
     frameWidth = frameOpenCVHaar.shape[1]
@@ -92,7 +94,7 @@ hasFrame, frame = video.read()
 print("args.image",args.image)
 print("gettempdir() pyt",gettempdir())
 
-dirr = os.path.join(gettempdir(),'uploads',args.socket_id,args.image + '_result.mp4v')
+dirr = args.image + '_result.mp4v'
 print('dir',dirr)
 
 
@@ -107,15 +109,15 @@ while cv2.waitKey(1) < 0:
         break
 
     if args.method == "deep":
-        # print("deep")
+        print("deep")
         resultImg, faceBoxes = highlightFace(faceNet, frame)
     else:
-        # print("haar")
+        print("haar")
         resultImg, faceBoxes = detectFaceOpenCVHaar(faceCascade, frame)
 
 
-    # if not faceBoxes:
-    #     print("No face detected")
+    if not faceBoxes:
+        print("No face detected")
 
     for faceBox in faceBoxes:
         face = frame[max(0, faceBox[1]-padding):
@@ -139,9 +141,9 @@ while cv2.waitKey(1) < 0:
 
         cv2.imwrite('_result.jpg', resultImg)
     vid_writer.write(resultImg)
-    # print('hello')
+    print('endLine1')
 
-
+print('endLine2')
 cv2.destroyAllWindows()
 vid_writer.release()
       
