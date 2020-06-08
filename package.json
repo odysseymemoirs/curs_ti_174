@@ -13,7 +13,7 @@
     "express": "^4.17.1",
     "mkdirp": "^1.0.4",
     "socket.io": "^2.3.0",
-    "socketio-file-upload": "^0.7.0"
-
+    "socketio-file-upload": "^0.7.0",
+    "unique-string": "^2.0.0"
   }
 }
