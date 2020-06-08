@@ -137,7 +137,7 @@ while cv2.waitKey(1) < 0:
             faceBox[0], faceBox[1]+250), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 102, 255), 2, cv2.LINE_AA)
         # cv2.imshow("Detecting age and gender", resultImg)
 
-        # cv2.imwrite('_result.jpg', resultImg)
+        cv2.imwrite('_result.jpg', resultImg)
     vid_writer.write(resultImg)
     # print('hello')
 
