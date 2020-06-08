@@ -17,7 +17,7 @@ function HaarCascadeDetection(settings, io, socket, event, id) {
             return;
           }
           console.log(stdout);
-        io.emit('detected', { path: `/static/'${socket.id}'/${event.file.name}_result.mp4v`, id });
+        io.emit('detected', { path: `/static/${socket.id}/${event.file.name}_result.mp4v`, id });
     })
 };
 
@@ -28,7 +28,7 @@ module.exports = class DetectionClass {
     }
 
     run(io, socket, event, id) {
-        const settings = `python detect2.py --image ${os.tmpdir()}/uploads/'${socket.id}'/${event.file.name} --socket_id '${socket.id} --method haar'`
+        const settings = `python detect2.py --image ${os.tmpdir()}/uploads/${socket.id}/${event.file.name} --socket_id ${socket.id} --method haar`
         return this.algorithm(settings, io, socket, event, id);
     }
 };

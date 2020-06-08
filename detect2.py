@@ -90,7 +90,7 @@ genderNet = cv2.dnn.readNet(genderModel, genderProto)
 video = cv2.VideoCapture(args.image if args.image else 0)
 hasFrame, frame = video.read()
 print(frame)
-dirr = os.path.join(gettempdir(),'uploads',"'",args.socket_id,"'",args.image + '_result.mp4v')
+dirr = os.path.join(gettempdir(),'uploads',args.socket_id,args.image + '_result.mp4v')
 print('dir',dirr)
 print(frame.shape)
 

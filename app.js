@@ -27,13 +27,13 @@ const app = express()
 
 
             // create dir if not exists
-            mkdirp(os.tmpdir() + `/uploads/'${socket.id}'/`).then(made =>
+            mkdirp(os.tmpdir() + `/uploads/${socket.id}/`).then(made =>
                 console.log(`made directories, starting with ${made}`))
 
 
             // Make an instance of SocketIOFileUploadServer and listen on this socket:
             var uploader = new SocketIOFileUploadServer();
-            uploader.dir = os.tmpdir() + `/uploads/'${socket.id}'/`;
+            uploader.dir = os.tmpdir() + `/uploads/${socket.id}/`;
             uploader.listen(socket);
 
 
@@ -44,7 +44,7 @@ const app = express()
 
                 let id = uniqueString()
 
-                io.emit('uploaded', { path: `/static/'${socket.id}'/${event.file.name}`, id })
+                io.emit('uploaded', { path: `/static/${socket.id}/${event.file.name}`, id })
 
                 io.emit('detection', { message: 'detection in progress' })
 
