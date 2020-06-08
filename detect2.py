@@ -134,6 +134,7 @@ while cv2.waitKey(1) < 0:
 
         cv2.imwrite('_result.jpg', resultImg)
     vid_writer.write(resultImg)
+    print('hello')
 
 
 cv2.destroyAllWindows()
