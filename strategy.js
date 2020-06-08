@@ -10,6 +10,8 @@ function DeepFaceDetection(settings, io, socket, event, id) {
 function HaarCascadeDetection(settings, io, socket, event, id) {
     console.log('detected')
     return exec(settings, (err, stdout, stderr) => {
+        console.log("1",stdout);
+
         if (err) {
             console.error(err);
             return;
@@ -26,7 +28,7 @@ module.exports = class DetectionClass {
     }
 
     run(io, socket, event, id) {
-        const settings = `py detect2.py --image ${os.tmpdir()}/uploads/'${socket.id}'/${event.file.name} --socket_id '${socket.id} --method haar'`
+        const settings = `python detect2.py --image ${os.tmpdir()}/uploads/'${socket.id}'/${event.file.name} --socket_id '${socket.id} --method haar'`
         return this.algorithm(settings, io, socket, event, id);
     }
 };
