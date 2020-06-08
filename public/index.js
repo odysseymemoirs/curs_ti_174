@@ -19,7 +19,7 @@ socket.on('uploaded', (data) => {
 
     const imageVideoBuilder = new ImageVideoBuilder();
     const imageVideoBuilderDirector = new ImageVideoDirector(imageVideoBuilder);
-    const element = imageVideoBuilderDirector.createDetectingVideoNode(data.path, data.id);
+    const element = imageVideoBuilderDirector.createDetectingImageNode(data.path, data.id);
 
     currentDetectingItem = new GalleryImage(data.id,element)
 
@@ -38,7 +38,7 @@ socket.on('detected', (data) => {
     // and create new element
     const imageVideoBuilder = new ImageVideoBuilder();
     const imageVideoBuilderDirector = new ImageVideoDirector(imageVideoBuilder);
-    const element = imageVideoBuilderDirector.createDetectedVideoNode(data.path, data.id);
+    const element = imageVideoBuilderDirector.createDetectedImageNode(data.path, data.id);
 
     // add detected video or image instead (adding new element to composition)
     currentDetectingItem = new GalleryImage(data.id,element)

@@ -52,7 +52,6 @@ const app = express()
 
                 detect.run(io, socket, event, id)
 
-
             });
         });
 
