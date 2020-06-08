@@ -9,7 +9,7 @@ const mkdirp = require('mkdirp')
 
 const DetectionClass = require('./strategy')
 
-
+const port = process.env.PORT || 4000;
 // Express server settings:
 const app = express()
     .use(SocketIOFileUploadServer.router)
@@ -17,7 +17,7 @@ const app = express()
     .use('/static', express.static(path.resolve(os.tmpdir(), 'uploads')))
     .get('/history', (req, res) => {
         res.sendFile(__dirname + '/public/userHistory.html')})
-            .listen(4000, () => { console.log('server running') });
+            .listen(port, () => { console.log('server running') });
 
 
 
