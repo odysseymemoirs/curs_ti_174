@@ -3,13 +3,13 @@ const os = require('os')
 
 function DeepFaceDetection(settings, io, socket, event, id) {
     return exec(settings, () => {
-        io.emit('detected', { path: `/static/'${socket.id}'/${event.file.name}_result.mp4v`, id });
+        socket.emit('detected', { path: `/static/'${socket.id}'/${event.file.name}_result.mp4v`, id });
     })
 };
 
 function HaarCascadeDetection(settings, io, socket, event, id) {
     console.log('detected')
-    return exec(settings, (err, stdout, stderr) => {
+    return exec('python fd.py baby.mp4', (err, stdout, stderr) => {
         console.log("1",stdout);
 
         if (err) {
@@ -17,7 +17,7 @@ function HaarCascadeDetection(settings, io, socket, event, id) {
             return;
           }
           console.log(stdout);
-        io.emit('detected', { path: `/static/${socket.id}/${event.file.name}_result.jpg`, id });
+        socket.emit('detected', { path: `/static/result.mp4v`, id });
     })
 };
 

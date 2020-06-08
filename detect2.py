@@ -95,8 +95,6 @@ print("args.image",args.image)
 print("gettempdir() pyt",gettempdir())
 
 dirr = args.image + '_result.mp4v'
-print('dir',dirr)
-
 
 vid_writer = cv2.VideoWriter(dirr.format(str(args.image).split(".")[0]),cv2.VideoWriter_fourcc(*'XVID'), 15, (frame.shape[1],frame.shape[0]))
 

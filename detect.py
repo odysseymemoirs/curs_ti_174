@@ -119,36 +119,5 @@ while cv2.waitKey(1) < 0:
 
         cv2.putText(resultImg, f' {age}', (
             faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2, cv2.LINE_AA)
-        # cv2.imshow("Detecting age and gender", resultImg)
 
-        # cv2.imwrite( '_result.jpg', resultImg)
         cv2.imwrite( os.path.join(gettempdir(),'uploads',args.image +'_result.jpg'), resultImg)
-
-        # fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        # out = cv2.VideoWriter('output.avi',fourcc, 20.0, (300,300))
-        # ret, frame = resultImg.read()
-        # if ret==True:
-        #  frame = cv2.flip(frame,0)
-        #  out.write(frame)
-        # # out.release()
-
-        # cap = cv2.VideoCapture(0)
-        # retval, image = cap.read()
-        # cap.release()
-
-        # Convert captured image to JPG
-        # retval, buffer = cv2.imencode('.jpg', resultImg)
-
-        # Convert to base64 encoding and show start of data
-        # jpg_as_text = base64.b64encode(buffer)
-        # print(jpg_as_text.decode("utf-8"))
-    
-
-
-        # # Convert back to binary
-        # jpg_original = base64.b64decode(jpg_as_text)
-        # # print(jpg_original)
-
-        # # Write to a file to show conversion worked
-        # with open('test.jpg', 'wb') as f_output:
-        #     f_output.write(jpg_original)

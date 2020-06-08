@@ -44,9 +44,9 @@ const app = express()
 
                 let id = uniqueString()
 
-                io.emit('uploaded', { path: `/static/${socket.id}/${event.file.name}`, id })
+                socket.emit('uploaded', { path: `/static/${socket.id}/${event.file.name}`, id })
 
-                io.emit('detection', { message: 'detection in progress' })
+                socket.emit('detection', { message: 'detection in progress' })
 
                 const detect = new DetectionClass('haar')
 
