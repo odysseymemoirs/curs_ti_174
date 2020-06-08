@@ -89,8 +89,11 @@ genderNet = cv2.dnn.readNet(genderModel, genderProto)
 
 video = cv2.VideoCapture(args.image if args.image else 0)
 hasFrame, frame = video.read()
-
+print(frame)
 dirr = os.path.join(gettempdir(),'uploads',args.socket_id,args.image + '_result.mp4v')
+print('dir',dirr)
+print(frame.shape)
+
 vid_writer = cv2.VideoWriter(dirr.format(str(args.image).split(".")[0]),cv2.VideoWriter_fourcc(*'XVID'), 15, (frame.shape[1],frame.shape[0]))
 
 
@@ -102,10 +105,10 @@ while cv2.waitKey(1) < 0:
         break
 
     if args.method == "deep":
-        print("deep")
+        # print("deep")
         resultImg, faceBoxes = highlightFace(faceNet, frame)
     else:
-        print("haar")
+        # print("haar")
         resultImg, faceBoxes = detectFaceOpenCVHaar(faceCascade, frame)
 
 
@@ -132,9 +135,9 @@ while cv2.waitKey(1) < 0:
             faceBox[0], faceBox[1]+250), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 102, 255), 2, cv2.LINE_AA)
         # cv2.imshow("Detecting age and gender", resultImg)
 
-        cv2.imwrite('_result.jpg', resultImg)
+        # cv2.imwrite('_result.jpg', resultImg)
     vid_writer.write(resultImg)
-    print('hello')
+    # print('hello')
 
 
 cv2.destroyAllWindows()
