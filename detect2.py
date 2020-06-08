@@ -89,10 +89,12 @@ genderNet = cv2.dnn.readNet(genderModel, genderProto)
 
 video = cv2.VideoCapture(args.image if args.image else 0)
 hasFrame, frame = video.read()
-print(frame)
+print("args.image",args.image)
+print("gettempdir() pyt",gettempdir())
+
 dirr = os.path.join(gettempdir(),'uploads',args.socket_id,args.image + '_result.mp4v')
 print('dir',dirr)
-print(frame.shape)
+
 
 vid_writer = cv2.VideoWriter(dirr.format(str(args.image).split(".")[0]),cv2.VideoWriter_fourcc(*'XVID'), 15, (frame.shape[1],frame.shape[0]))
 

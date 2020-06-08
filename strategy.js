@@ -28,6 +28,9 @@ module.exports = class DetectionClass {
     }
 
     run(io, socket, event, id) {
+        console.log('tmp path',`${os.tmpdir()}/uploads/${socket.id}/${event.file.name}`)
+        console.log('os.tmpdir', os.tmpdir())
+
         const settings = `python detect2.py --image ${os.tmpdir()}/uploads/${socket.id}/${event.file.name} --socket_id ${socket.id} --method haar`
         return this.algorithm(settings, io, socket, event, id);
     }
