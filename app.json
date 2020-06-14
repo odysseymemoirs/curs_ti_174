@@ -14,7 +14,7 @@
       "python"
     ],
     "scripts": {
-        "start": "node app.js"
+        "start": "node server.js"
       },
     "addons": [
     ],

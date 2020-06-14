@@ -1,10 +1,6 @@
 .vercel
 now.json
 node_modules
-public/css/skeleton.css
-public/css/normalize.css
-public/css/additional.css
-public/css/fancyLoader.css
 
 
 

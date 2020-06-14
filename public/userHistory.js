@@ -7,12 +7,12 @@ if (storage) {
     let a = document.getElementsByClassName('gridContainer')
     a[0].appendChild(imageVideoComposition.element)
 
-    storage.links.map((urlPath, index) => {
+    storage.links.map((e, index) => {
 
         const imageVideoBuilder = new ImageVideoBuilder()
-            .elem('video')
-            .src(urlPath)
-            .attrs({ "autoplay": false, "loop": false })
+            .elem(e.fileType)
+            .src(e.path)
+            .attrs({ "autoplay": false, "loop": false, 'controls': true })
             .classList('u-max-full-width')
             .id(index)
             .build();

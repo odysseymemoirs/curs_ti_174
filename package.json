@@ -1,16 +1,27 @@
 {
-  "name": "sock2",
+  "name": "coursework",
   "version": "1.0.0",
-  "description": "",
+  "description": "face and age detection",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Andrei Ceban",
+    "email": "andrei.ceban3@ati.utm.md"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "python",
+    "opencv",
+    "ageDetection",
+    "faceDetection"
+  ],
+  "license": "",
   "dependencies": {
     "express": "^4.17.1",
+    "mime-types": "^2.1.27",
     "mkdirp": "^1.0.4",
     "socket.io": "^2.3.0",
     "socketio-file-upload": "^0.7.0",
