@@ -1,9 +1,9 @@
-# Face and Age Detection
+# Face and Age Detection using Openc
 
 ## Installation(Windows)
 
-Node.js latest version
-Python latest version
+- Node.js latest version
+- Python latest version
 
 ``` javascript
 npm install
@@ -13,11 +13,13 @@ http://localhost:4000/
 ```
 
 ## Demo
-course-work-utm.herokuapp.com
+https://course-work-utm.herokuapp.com/
 
 ## Resources used in this course work
-https://github.com/dhg/Skeleton
-https://codepen.io/sebastianinman/pen/dPmKjM
+- https://github.com/dhg/Skeleton
+- https://codepen.io/sebastianinman/pen/dPmKjM
+- https://talhassner.github.io/home/publication/2015_CVPR
+- https://github.com/smahesh29/Gender-and-Age-Detection
 
 ## Screenshots
 ![Upload](https://github.com/odysseymemoirs/curs_ti_174/blob/master/image.png)
