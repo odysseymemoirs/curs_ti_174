@@ -1,4 +1,4 @@
-# Face and Age Detection using Openc
+# Face and Age Detection using OpenCV
 
 ## Installation(Windows)
 
