@@ -20,7 +20,7 @@
   ],
   "license": "",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mime-types": "^2.1.27",
     "mkdirp": "^1.0.4",
     "socket.io": "^2.3.0",
